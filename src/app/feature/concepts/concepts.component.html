@@ -1,0 +1,26 @@
+<h1>{{title | uppercase}}</h1>
+@for (title of titles; track $index) {
+  @if ($index/2 == 0) {
+    <h1>{{title | uppercase}}</h1>
+  } @else {
+    <p>NOT RENDERING</p>
+  }
+}
+
+<h1 *ngIf="displayArrayTitles">{{titles}}</h1>
+@if (displayArrayTitles) {
+  <h1>{{titles}}</h1>
+}
+<h1>{{usuario | json}}</h1>
+<button (click)="clickButton()">BUTTON</button>
+<input (onkeyup.enter)="clickButton()" placeholder="Clicking button"/>
+<input (onkeyup.enter)="clickButton()" placeholder="Clicking button"/>
+<source [src]="imageUrl" type="">
+<app-usuario></app-usuario>
+<app-usuario></app-usuario>
+<app-usuario></app-usuario>
+<app-usuario></app-usuario>
+<app-usuario></app-usuario>
+<div class="card flex justify-content-center gap-2">
+  <p-button label="Check" icon="pi pi-check"></p-button>
+</div>
