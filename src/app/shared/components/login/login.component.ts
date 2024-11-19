@@ -6,14 +6,14 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../../core/service/auth.service';
 import { AuthDto } from '../../../core/dto/auth.dto';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CheckboxModule, InputTextModule, FormsModule, ToastModule, RippleModule],
+  imports: [CommonModule, ButtonModule, CheckboxModule, InputTextModule, FormsModule, ToastModule, RippleModule, RouterLink],
   providers: [AuthService, MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

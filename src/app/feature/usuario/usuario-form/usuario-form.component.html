@@ -1,1 +1,40 @@
-<p>usuario-form works!</p>
+<form [formGroup]="usuariosForm" class="col-12">
+    <div class="card">
+        <h3>Registro de Usuario</h3>
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 md:col-6">
+                <label htmlFor="nombres">Nombres</label>
+                <input pInputText id="nombres" type="text" formControlName="nombres"/>
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="apellidos">Apellidos</label>
+                <input pInputText id="apellidos" type="text" formControlName="apellidos" />
+            </div>
+            <div class="field col-12">
+                <label htmlFor="password">Password</label>
+                <input pPassword id="password" rows="4" formControlName="password"/>
+            </div>
+            <div class="field col-12 md:col-6">
+                <label htmlFor="correo">Correo</label>
+                <input pInputText id="correo" type="text" formControlName="correo" />
+            </div>
+            <div class="field col-12 md:col-3">
+                <label htmlFor="username">Nombre de usuario</label>
+                <input pInputText id="username" type="text" formControlName="username"/>
+            </div>
+            <div class="field col-12 md:col-3">
+                <label htmlFor="razonSocial">Nombre de usuario</label>
+                <input pInputText id="razonSocial" type="text" formControlName="razonSocial"/>
+            </div>
+            <div class="field col-12 md:col-3">
+                <label htmlFor="nit">Nombre de usuario</label>
+                <input pInputText id="nit" type="text" formControlName="nit"/>
+            </div>
+        </div>
+        <div>
+            <p-button label="Cancelar" severity="danger" />
+            <p-button label="Registrar" (onClick)="onSubmit()"/>
+        </div>
+    </div>
+</form>
+<p>{{this.usuariosForm.value | json}}</p>
