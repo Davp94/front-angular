@@ -2,33 +2,113 @@
     <div class="card">
         <h3>Registro de Usuario</h3>
         <div class="p-fluid p-formgrid grid">
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 sm:col-6 md:col-4">
                 <label htmlFor="nombres">Nombres</label>
                 <input pInputText id="nombres" type="text" formControlName="nombres"/>
+                @if (isValidFormField('nombres')) {
+                    <small class="text-red-600">
+                        El usuario es requerido
+                    </small>
+                }
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 sm:col-6 md:col-4">
                 <label htmlFor="apellidos">Apellidos</label>
                 <input pInputText id="apellidos" type="text" formControlName="apellidos" />
+                @if (isValidFormField('nombres')) {
+                    <small class="text-red-600">
+                        El nombre es requerido
+                    </small>
+                }
             </div>
-            <div class="field col-12">
+            <div class="field col-12 sm:col-6 md:col-4">
                 <label htmlFor="password">Password</label>
                 <input pPassword id="password" rows="4" formControlName="password"/>
+                @if (isValidFormField('nombres')) {
+                    <small class="text-red-600">
+                        El Password es requerido
+                    </small>
+                }
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 sm:col-6 md:col-4">
                 <label htmlFor="correo">Correo</label>
                 <input pInputText id="correo" type="text" formControlName="correo" />
+                @if (isValidFormField('correo')) {
+                    <small class="text-red-600">
+                        {{getFormFieldErrors(('correo'))}}
+                    </small>
+                }
             </div>
-            <div class="field col-12 md:col-3">
+            <div class="field col-12 sm:col-6 md:col-4">
                 <label htmlFor="username">Nombre de usuario</label>
                 <input pInputText id="username" type="text" formControlName="username"/>
+                @if (isValidFormField('username')) {
+                    <small class="text-red-600">
+                        El Nombre de usuario es requerido
+                    </small>
+                }
             </div>
-            <div class="field col-12 md:col-3">
-                <label htmlFor="razonSocial">Nombre de usuario</label>
+            <div class="field col-12 sm:col-6 md:col-4">
+                <label htmlFor="razonSocial">Razon Social</label>
                 <input pInputText id="razonSocial" type="text" formControlName="razonSocial"/>
+                @if (isValidFormField('razonSocial')) {
+                    <small class="text-red-600">
+                        Razon Social es requerido
+                    </small>
+                }
             </div>
-            <div class="field col-12 md:col-3">
-                <label htmlFor="nit">Nombre de usuario</label>
+            <div class="field col-12 sm:col-6 md:col-4">
+                <label htmlFor="nit">Nit</label>
                 <input pInputText id="nit" type="text" formControlName="nit"/>
+                @if (isValidFormField('nit')) {
+                    <small class="text-red-600">
+                        El Nit es requerido
+                    </small>
+                }
+            </div>
+            <div class="field col-12">
+                <div class="flex gap-2 align-items-center">
+                    <label>Direcciones</label>
+                    <p-button label="Añadir" icon="pi pi-plus" size="small" (onClick)="createDireccion()"/>
+                </div>
+                <br>
+                <div formArrayName="direcciones">
+                    @for (direccion of direcciones.controls; track $index) {
+                        <label>Direccion {{$index+1}}</label>
+                        <div class="flex flex-column md:flex-row gap-4 align-items-start" [formGroupName]="$index">
+                            <div class="field">
+                                <label htmlFor="nit">Zona</label>
+                                <input pInputText id="nit" type="text" formControlName="zona"/>
+                            </div>
+                            @if (isValidFormFieldArray(direcciones, $index, 'zona')) {
+                                <small class="text-red-600">
+                                    La zona es requerida
+                                </small>
+                            }
+                            <div class="field flex flex-column gap-1">
+                                <label htmlFor="nit">Calle</label>
+                                <input pInputText id="nit" type="text" formControlName="calle"/>
+                                @if (isValidFormFieldArray(direcciones, $index, 'calle')) {
+                                    <small class="text-red-600">
+                                        La calle es requerida
+                                    </small>
+                                }
+                            </div>
+                           
+                            <div class="field">
+                                <label htmlFor="nit">Nro</label>
+                                <input pInputText id="nit" type="text" formControlName="nro"/>
+                            </div>
+                            @if (isValidFormFieldArray(direcciones, $index, 'nro')) {
+                                <small class="text-red-600">
+                                    El Nro es requerido
+                                </small>
+                            }
+                            @if ($index > 0) {
+                                <p-button label="eliminar" [text]="true" icon="pi pi-trash" size="small" (onClick)="removeDireccion($index)"/>
+                            }
+                        </div>
+                    }
+                </div>
             </div>
         </div>
         <div>
@@ -37,4 +117,8 @@
         </div>
     </div>
 </form>
+<p-toast />
 <p>{{this.usuariosForm.value | json}}</p>
+<p>{{this.usuariosForm.controls['correo'].errors | json}}</p>
+<p>{{this.usuariosForm.valid}}</p>
+<p>{{direcciones.controls[0].get('zona')?.errors | json}}</p>
