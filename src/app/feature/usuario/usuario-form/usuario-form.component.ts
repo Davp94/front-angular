@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-usuario-form',
   standalone: true,
@@ -18,7 +19,7 @@ import { ToastModule } from 'primeng/toast';
 export class UsuarioFormComponent implements OnInit{
 
   usuariosForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private usuariosService: UsuarioService, private messageService: MessageService){
+  constructor(private formBuilder: FormBuilder, private usuariosService: UsuarioService, private messageService: MessageService, private router: Router){
     this.usuariosForm = this.formBuilder.group({
       nombres: ['' as string, Validators.required],
       apellidos: ['', [Validators.required]],
@@ -86,12 +87,18 @@ export class UsuarioFormComponent implements OnInit{
   onSubmit() {
     this.usuariosForm.markAllAsTouched();
     if(this.usuariosForm.valid){
-      console.log("🚀 ~ UsuarioFormComponent ~ onSubmit ~ this.usuariosForm.value:", this.usuariosForm.value)
+      
       this.usuariosService.createUser(this.usuariosForm.value).subscribe({
-        next: res => console.log(res)
+        next: res => {
+          this.messageService.add({ severity: 'Success', summary: 'Success', detail: 'Se registro el usuario con éxito, Puede ingresar con sus credenciales' })
+          this.router.navigateByUrl('/login');
+        },
+        error: res => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al registrar el usuario' })
+        }
       })
     }else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error login' })
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al enviar los datos, debe completar el formulario' })
     }
   }
 }
