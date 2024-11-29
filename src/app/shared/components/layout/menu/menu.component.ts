@@ -25,8 +25,8 @@ export class MenuComponent implements OnInit{
           {
               label: 'Ecommerce',
               items: [
-                  { label: 'Productos', icon: 'pi pi-fw pi-id-card', routerLink: ['/uikit/formlayout'] },
-                  { label: 'Pedidos', icon: 'pi pi-fw pi-check-square', routerLink: ['/uikit/input'] }
+                  { label: 'Productos', icon: 'pi pi-fw pi-id-card', routerLink: ['/producto'] },
+                  { label: 'Pedidos', icon: 'pi pi-fw pi-check-square', routerLink: ['/pedido'] }
               ]
           },
       ];
