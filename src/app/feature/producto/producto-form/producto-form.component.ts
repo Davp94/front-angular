@@ -1,30 +1,43 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-producto-form',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    ButtonModule,
+    RippleModule,
+    InputTextModule,
+    InputNumberModule,
+    DropdownModule,
+    InputTextareaModule,
+    FileUploadModule,
+    FormsModule,
+  ],
   templateUrl: './producto-form.component.html',
-  styleUrl: './producto-form.component.scss'
+  styleUrl: './producto-form.component.scss',
 })
-export class ProductoFormComponent {
-//   saveProduct() {
-//     this.submitted = true;
+export class ProductoFormComponent implements OnInit{
+  uploadedFiles: any[] = [];
 
-//     if (this.product.name?.trim()) {
-//         if (this.product.id) {
-//             this.products[this.findIndexById(this.product.id)] = this.product;
-//             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-//         } else {
-//             this.product.id = this.createId();
-//             this.product.image = 'product-placeholder.svg';
-//             this.products.push(this.product);
-//             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-//         }
+  constructor(){
 
-//         this.products = [...this.products];
-//         this.productDialog = false;
-//         this.product = {};
-//     }
-// }
+  }
+  ngOnInit(): void {
+  }
+
+  onUpload(event: any) {
+    for (let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+  }
 }

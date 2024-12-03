@@ -60,7 +60,7 @@
                 </td>
                 <td>
                 <img 
-                    [src]="imgBaseUrl + '/' + product.image" 
+                    [src]="imgBaseUrl + '/' + product.img" 
                     [alt]="product.nombre" 
                     width="50" 
                     class="shadow-4" />
@@ -69,7 +69,7 @@
                     {{ product.precio }}
                 </td>
                 <td>
-                    {{ product.categoryId }}
+                    {{ product.nombreCategoria }}
                 </td>
                 <td>
                     <p-button 
@@ -98,10 +98,10 @@
     <p-dialog 
         [(visible)]="productDialog" 
         [style]="{ width: '450px' }" 
-        header="Product Details" 
+        header="Formulario Producto" 
         [modal]="true" 
         styleClass="p-fluid">
-       <div>MODAL CRETE PRODUCTO</div>
+       <app-producto-form></app-producto-form>
     </p-dialog>
 
     <p-confirmDialog [style]="{ width: '450px' }" />

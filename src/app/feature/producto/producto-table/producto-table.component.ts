@@ -22,11 +22,12 @@ import { ProductoService } from '../../../core/service/producto.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from '../../../../environments/environment.development';
 import { OrderEnum } from '../../../shared/enum/order.enum';
+import { ProductoFormComponent } from "../producto-form/producto-form.component";
 
 @Component({
   selector: 'app-producto-table',
   standalone: true,
-  imports: [TableModule, DialogModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule],
+  imports: [TableModule, DialogModule, RippleModule, ButtonModule, ToastModule, ToolbarModule, ConfirmDialogModule, InputTextModule, InputTextareaModule, CommonModule, FileUploadModule, DropdownModule, TagModule, RadioButtonModule, RatingModule, InputTextModule, FormsModule, InputNumberModule, ProductoFormComponent],
   providers: [MessageService, ConfirmationService, ProductoService],
   templateUrl: './producto-table.component.html',
   styleUrl: './producto-table.component.scss'
