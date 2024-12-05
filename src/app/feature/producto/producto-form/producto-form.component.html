@@ -1,29 +1,31 @@
-<div>
+<form [formGroup]="productForm">
     <div class="field">
-        <label for="name">Nombre</label>
-        <input type="text" pInputText id="name" required autofocus />
+        <label for="nombre">Nombre</label>
+        <input type="text" pInputText id="nombre" required autofocus formControlName="nombre"/>
     </div>
     <div class="field">
-        <label for="description">Description</label>
-        <textarea id="description" pInputTextarea required rows="3" cols="20">
+        <label for="descripcion">Descripcion</label>
+        <textarea id="descripcion" pInputTextarea required rows="3" cols="20" formControlName="descripcion">
         </textarea>
     </div>
 
     <div class="field">
-        <label for="inventoryStatus">Categoria</label>
-        <p-dropdown inputId="inventoryStatus" [options]="[]">
+        <label for="categoriaId">Categoria</label>
+        <p-dropdown inputId="categoriaId" [options]="categorias" optionLabel="nombre" optionValue="id" formControlName="categoriaId">
         </p-dropdown>
     </div>
 
     <div class="formgrid grid">
         <div class="field col">
-            <label for="price">Precio</label>
-            <p-inputNumber id="price" locale="es-Bo" />
+            <label for="precio">Precio</label>
+            <p-inputNumber id="precio" locale="es-Bo" formControlName="precio" />
         </div>
     </div>
     <label>Imagen</label>
     <br>
     <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" (onUpload)="onUpload($event)"
+        (onSelect)="onUpload($event)"
+        
         [multiple]="true" accept="image/*" maxFileSize="1000000">
         <ng-template pTemplate="content">
             <ul *ngIf="uploadedFiles.length">
@@ -34,8 +36,8 @@
         </ng-template>
     </p-fileUpload>
     <div class="flex gap-4 justify-content-end mt-4">
-        <p-button label="Cancel" icon="pi pi-times"  severity="danger"/>
-        <p-button label="Save" icon="pi pi-check"  />
+        <p-button label="Cancel" icon="pi pi-times"  severity="danger" (click)="closeDialog()"/>
+        <p-button label="Save" icon="pi pi-check" (click)="createProduct()" />
     </div>
  
-</div>
+</form>

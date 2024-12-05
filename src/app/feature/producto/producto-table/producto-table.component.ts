@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Component, OnInit, signal } from '@angular/core';
+import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
@@ -33,7 +33,7 @@ import { ProductoFormComponent } from "../producto-form/producto-form.component"
   styleUrl: './producto-table.component.scss'
 })
 export class ProductoTableComponent implements OnInit{
-  productDialog: boolean = false;
+  productDialog = signal(false);
 
   products!: ProductoDto[];
 
@@ -45,14 +45,11 @@ export class ProductoTableComponent implements OnInit{
 
   imgBaseUrl = environment.appUrl + environment.imgPath;
 
+  totalRecords: number = 0;
+
   constructor(private productoService: ProductoService, private messageService: MessageService, private confirmationService: ConfirmationService) {}
 
   ngOnInit() {
-      this.productoService.findAllProductsPagination({take: 2, page: 0, sortDireccion: OrderEnum.ASC, sortParam: 'id' }).subscribe({
-        next: (data: ProductoPaginationDto) => this.products = data.content,
-        error: err => console.log(err)
-      });
-
       this.statuses = [
           { label: 'INSTOCK', value: 'instock' },
           { label: 'LOWSTOCK', value: 'lowstock' },
@@ -62,7 +59,7 @@ export class ProductoTableComponent implements OnInit{
 
   openNew() {
       this.submitted = false;
-      this.productDialog = true;
+      this.productDialog.set(true);
   }
 
   deleteSelectedProducts() {
@@ -77,8 +74,18 @@ export class ProductoTableComponent implements OnInit{
   }
 
   hideDialog() {
-      this.productDialog = false;
+    this.productDialog.set(false);
       this.submitted = false;
+  }
+
+  lazyLoadEvent(event: TableLazyLoadEvent){
+    this.productoService.findAllProductsPagination({take: event.rows || 10, page: event.first || 0, sortDireccion: event.sortOrder == 1 ? OrderEnum.ASC : OrderEnum.DESC, sortParam: event.sortField as string || 'id' }).subscribe({
+        next: (data: ProductoPaginationDto) => {
+            this.products = data.content;
+            this.totalRecords = data.totalRecords
+        },
+        error: err => console.log(err)
+      });
   }
 
   //TODO add field stock on producto

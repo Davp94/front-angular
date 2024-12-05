@@ -21,4 +21,15 @@ export class ProductoService {
     .set('sortParam', productoPaginationDto.sortParam);
     return this.httpClient.get<ProductoPaginationDto>(`${this.appUrl}${this.pathService}`, {params: params });
   }
+
+  createProducto(productoRequest: any, file: File): Observable<any>{
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('nombre', productoRequest.nombre);
+    formData.append('descripcion', productoRequest.descripcion);
+    formData.append('precio', productoRequest.precio);
+    formData.append('categoriaId', productoRequest.categoriaId);
+    formData.append('img', productoRequest.img);
+    return this.httpClient.post<any>(`${this.appUrl}${this.pathService}`, formData);
+  }
 }

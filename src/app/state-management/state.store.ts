@@ -9,6 +9,7 @@ type State = {
 const initialState: State = {
     item: {
         pedidosList: [],
+        total: 0,
     }
 }
 
@@ -16,16 +17,33 @@ export const PedidosStore = signalStore(
   { providedIn: 'root'},
   withState(initialState),
   withComputed(({ item }) => ({
-    pedidos: computed(() => item.pedidosList())
+    pedidos: computed(() => item.pedidosList()),
+    totalPedido: computed(() => item.total())
   })),
   withMethods(store => ({
-    addPedido(pedido: any){
+    addPedido(pedidoList: any){
         patchState(store, {
             item: {
                 ...store.item(),
-                pedidosList: [...store.pedidos(), pedido]
+                pedidosList: pedidoList
             }
         })
+    },
+    addTotal(total: number){
+      patchState(store, {
+          item: {
+              ...store.item(),
+              total: total,
+          }
+      })
+  },
+    resetPedido(){
+      patchState(store, {
+        item: {
+            pedidosList: [],
+            total: 0
+        }
+    })
     }
     
   }))

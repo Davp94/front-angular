@@ -9,6 +9,7 @@ import { TagModule } from 'primeng/tag';
 import { DataViewModule } from 'primeng/dataview';
 import { environment } from '../../../../environments/environment.development';
 import { PedidosStore } from '../../../state-management/state.store';
+import { PedidoService } from '../../../core/service/pedido.service';
 
 @Component({
   selector: 'app-producto-list',
@@ -24,7 +25,7 @@ export class ProductoListComponent implements OnInit{
   products!: ProductoDto[];
   imgBaseUrl = environment.appUrl + environment.imgPath;
   store = inject(PedidosStore);
-  constructor(private productoService: ProductoService){
+  constructor(private productoService: ProductoService, private pedidoService: PedidoService){
 
   }
   ngOnInit(): void {
@@ -34,9 +35,9 @@ export class ProductoListComponent implements OnInit{
       });
   }
 
-  realizarPedido(item: any) {
+  async realizarPedido(item: any) {
     console.log("🚀 ~ ProductoListComponent ~ item:", item)
-    this.store.addPedido({nombre: item.nombre, nombreCategoria: item.nombreCategoria, precio: item.precio});
+    await this.pedidoService.calculateDetallePedido({nombre: item.nombre, nombreCategoria: item.nombreCategoria, precio: item.precio, cantidad: 1});
   }
 
 }

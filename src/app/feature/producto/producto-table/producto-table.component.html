@@ -15,9 +15,14 @@
 
     <p-table
         #dt
+        lazy="true"
+        (onLazyLoad)="lazyLoadEvent($event)"
         [value]="products"
         [rows]="10"
+        [rowsPerPageOptions]="[10, 25 ,50]"
         [paginator]="true"
+        [totalRecords]="totalRecords"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
         [tableStyle]="{ 'min-width': '75rem' }"
         [rowHover]="true"
         dataKey="id"
@@ -101,7 +106,7 @@
         header="Formulario Producto" 
         [modal]="true" 
         styleClass="p-fluid">
-       <app-producto-form></app-producto-form>
+       <app-producto-form [booleanDialog]="productDialog"></app-producto-form>
     </p-dialog>
 
     <p-confirmDialog [style]="{ width: '450px' }" />
