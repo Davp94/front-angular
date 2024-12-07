@@ -1,6 +1,12 @@
 
 <div class="card">
-    <label class="text-center text-2xl">PEDIDO</label>
+    <div class="flex justify-content-between">
+        <label class="text-center text-2xl">PEDIDO</label>
+        @if (store.totalPedido() > 0) {
+            <p-button label="Cotizar" icon="pi pi-calendar" severity="warning" (onClick)="cotizarPedido()" />
+        }
+    </div>
+  
     <div class="grid grid-nogutter">
         <div class="col-12" *ngFor="let item of store.pedidos(); let first = first" class="col-12">
             <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" [ngClass]="{ 'border-top-1 surface-border': !first }">

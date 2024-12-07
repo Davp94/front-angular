@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { PedidosStore } from '../../state-management/state.store';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { PedidoRequestDto } from '../dto/pedido.request.dto';
+import { DetallePedidoRequestDto } from '../dto/detalle-pedido.request.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class PedidoService {
 
   createPedido(pedidoRequest: PedidoRequestDto): Observable<any>{
     return this.httpClient.post<any>(`${this.appUrl}${this.pathService}`, pedidoRequest);
+  }
+
+  createCotizacion(detallePedido: DetallePedidoRequestDto[]): Observable<Blob>{
+    return this.httpClient.post<Blob>(`${this.appUrl}/detalle-pedido/cotizacion`, {data: detallePedido}, {responseType: 'blob' as 'json'})
   }
 
   async calculateDetallePedido(nuevoPedido: any){

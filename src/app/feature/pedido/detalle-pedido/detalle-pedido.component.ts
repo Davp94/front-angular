@@ -36,13 +36,27 @@ export class DetallePedidoComponent {
             this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'Pedido Realizado' }),
             this.store.resetPedido();
           },
-          error: err => this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'Error al crear el pedido', life: 3000 })
+          error: err => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear el pedido', life: 3000 })
         })
       },
       reject: () => {
           this.messageService.add({ severity: 'error', summary: 'Rechazado', detail: 'Operacion rechazada', life: 3000 });
       }
   });
+  }
+  cotizarPedido(){
+    const dataCotizacion = this.buildPedido(this.store.pedidos())
+    this.pedidoService.createCotizacion(dataCotizacion).subscribe({
+      next: res => {
+        const url = window.URL.createObjectURL(res);
+        window.open(url);
+        window.URL.revokeObjectURL(url);
+      },
+      error: err => {
+        console.log("🚀 ~ DetallePedidoComponent ~ this.pedidoService.createCotizacion ~ err:", err)
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear la cotizacion', life: 3000 })
+      }
+    })
   }
 
   buildPedido(pedidos: any){
