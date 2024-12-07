@@ -20,7 +20,8 @@ export class AuthService {
     return this.httpClient.post<AuthResponseDto>(`${this.appUrl}${this.pathService}`, credentials).pipe(
       tap((response: AuthResponseDto) => {
         this.token = response.token;
-        localStorage.setItem('token', this.token); 
+        localStorage.setItem('token', this.token);
+        localStorage.setItem('uid', response.usuarioId+'');  
       })
     )
   }

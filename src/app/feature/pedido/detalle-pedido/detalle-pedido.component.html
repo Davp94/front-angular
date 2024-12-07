@@ -1,5 +1,6 @@
-<p>{{ store.pedidos() | json}}</p>
+
 <div class="card">
+    <label class="text-center text-2xl">PEDIDO</label>
     <div class="grid grid-nogutter">
         <div class="col-12" *ngFor="let item of store.pedidos(); let first = first" class="col-12">
             <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" [ngClass]="{ 'border-top-1 surface-border': !first }">
@@ -19,8 +20,13 @@
                 </div>
             </div>
         </div>
-        <div class="align-items-end">
-            <span><label class="font-bold">Total:</label> {{store.totalPedido()}}</span>
+        <div class="flex justify-content-end w-full gap-4">
+            <span class="text-2xl"><label class="font-bold align-self-end">Total:</label> {{store.totalPedido()}}</span>
+            @if (store.totalPedido() > 0) {
+                <p-button label="Realizar Pedido" icon="pi pi-check" (onClick)="realizarPedido($event)" />
+            }
         </div>
     </div>
+    <p-toast />
+    <p-confirmDialog />
 </div>

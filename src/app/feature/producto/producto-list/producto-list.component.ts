@@ -36,8 +36,7 @@ export class ProductoListComponent implements OnInit{
   }
 
   async realizarPedido(item: any) {
-    console.log("🚀 ~ ProductoListComponent ~ item:", item)
-    await this.pedidoService.calculateDetallePedido({nombre: item.nombre, nombreCategoria: item.nombreCategoria, precio: item.precio, cantidad: 1});
+    await this.pedidoService.calculateDetallePedido({id: item.id, nombre: item.nombre, nombreCategoria: item.nombreCategoria, precio: item.precio, cantidad: 1});
   }
 
 }

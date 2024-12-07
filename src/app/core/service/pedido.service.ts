@@ -1,12 +1,22 @@
 import { inject, Injectable } from '@angular/core';
 import { PedidosStore } from '../../state-management/state.store';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment.development';
+import { Observable } from 'rxjs';
+import { PedidoRequestDto } from '../dto/pedido.request.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
+  appUrl = environment.appUrl;
+  pathService: string =  '/pedido';
   store = inject(PedidosStore);
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
+
+  createPedido(pedidoRequest: PedidoRequestDto): Observable<any>{
+    return this.httpClient.post<any>(`${this.appUrl}${this.pathService}`, pedidoRequest);
+  }
 
   async calculateDetallePedido(nuevoPedido: any){
     const pedidos = this.store.pedidos();
@@ -21,12 +31,9 @@ export class PedidoService {
       }
     }else {
       pedidos.push(nuevoPedido);
-      total = total + nuevoPedido.precio;
+      total = this.store.totalPedido() + nuevoPedido.precio;
     }
-    console.log("🚀 ~ PedidoService ~ pedidos:", pedidos)
-
     this.store.addPedido(pedidos);
     this.store.addTotal(total);
-
   }
 }
